@@ -11,7 +11,7 @@ const defaultFormFields = {
     displayName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
 }
 
 const SignUpForm = () => {
