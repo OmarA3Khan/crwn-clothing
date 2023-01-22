@@ -5,7 +5,7 @@ import './sign-in-form.styles.scss'
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import { signInWithGooglePopup, createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils.js';
+import { signInWithGooglePopup, signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils.js';
 
 const defaultFormFields = {
     email: '',
@@ -18,24 +18,17 @@ const SignInForm = () => {
     const { email, password } = formFields;
 
     const signInWithGoogle = async() => {
-        const { user } = await signInWithGooglePopup();
-        await createUserDocumentFromAuth(user);
+        await signInWithGooglePopup();
     }
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-        console.log('form submitted');
-        console.log('formFields:', formFields);
 
         try {
-            const { user } = await signInAuthUserWithEmailAndPassword(email, password)
-            // .then((userCredential) => {
-            //     // Signed in 
-            console.log('Success! \n user: ', user);
+            const { user } = await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
 
         } catch (error) {
-            console.log('error:', JSON.stringify(error, null, '\t'));
             switch(error.code){
                 case 'auth/user-not-found':
                     alert('No user associated with this email');

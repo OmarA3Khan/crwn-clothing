@@ -32,18 +32,13 @@ const SignUpForm = () => {
 
         try {
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
-            console.log('resonse:', user);
-            console.log('resonse:', JSON.stringify(user, null, '\t'));
-            
-            const userDocRef = await createUserDocumentFromAuth(user, { displayName });
+            await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
 
         } catch (error) {
             if(error.code === 'auth/email-already-in-use') {
                 alert('Cannot create user! Email already exists');
             }
-            console.log('user creation error:', error);
-            console.log('user creation error:', JSON.stringify(error, null, '\t'));
         }
     };
 
